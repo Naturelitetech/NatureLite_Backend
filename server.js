@@ -33,7 +33,7 @@ app.post('/signup', async (req, res) => {
     const number = req.body.number;
     const password = req.body.password;
     const department = req.body.department;
-    const role = req.body.role;
+    const role_id = req.body.role_id;
     const email = 'ashi133@gmail.com'; // Fixed email
     const verificationToken = generateToken();
     // ]
@@ -44,8 +44,8 @@ app.post('/signup', async (req, res) => {
     //     return res.status(400).json({ error: 'Phone number already in use' });
     // }
 
-    const sql = 'INSERT INTO user (name, number, password, department, role, email, verification_token) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    db.query(sql, [name, number, password, department, role, email, verificationToken], (err, data) => {
+    const sql = 'INSERT INTO user (name, number, password, department, role_id, email, verification_token) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    db.query(sql, [name, number, password, department, role_id, email, verificationToken], (err, data) => {
         if (err) {
             return res.json("Error");
         }
