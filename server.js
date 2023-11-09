@@ -192,9 +192,12 @@ app.listen(8001, () => {
 
 
 app.post('/create_order', (req, res) => {
-    const { number, customer_details, order_details, order_summary } = req.body;
+
+    console.log(req.body);
+    const customer_details = req.body.customer;
+    const order_details = req.body.order;
     // Check if the customer already exists 
-    db.query('SELECT cust_id FROM customer WHERE number = ?', [number], (err, results) => {
+    db.query('SELECT cust_id FROM customer WHERE number = ?', [customer_details.number], (err, results) => {
 
         if (err) {
             console.error('Error querying the customer: ' + err.message);
@@ -205,7 +208,7 @@ app.post('/create_order', (req, res) => {
 
             // Customer doesn't exist, so insert them into the customers table 
             db.query('INSERT INTO customer (name, number, address) VALUES (?, ?, ?)',
-                [customer_details.name, customer_details.address, number], (err, results) => {
+                [customer_details.name, customer_details.number, customer_details.address], (err, results) => {
 
                     if (err) {
                         console.error('Error inserting customer: ' + err.message);
@@ -215,7 +218,7 @@ app.post('/create_order', (req, res) => {
                     const cust_id = results.insertId;
 
                     // Insert order details with the cust_id
-                    db.query('INSERT INTO order_details (cust_id, prod_id, order_date, invoice, shipping_charge, location, delivery_preference, payment_mode, amount, total_amount, grand_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,)',
+                    db.query('INSERT INTO order_detail (cust_id, prod_id, order_date, invoice, shipping_charge, location, delivery_preference, payment_mode, amount, total_amount, grand_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)',
                         [
                             cust_id,
                             order_details.prod_id,
@@ -244,10 +247,10 @@ app.post('/create_order', (req, res) => {
 
             // Customer already exists, insert order details directly
             const cust_id = results[0].cust_id;
-            db.query('INSERT INTO order_detail (cust_id, prod_id ,order_date, invoice, shipping_charge, location, delivery_preference, payment_mode, amount, total_amount, grand_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            db.query('INSERT INTO order_detail (cust_id, prod_id ,order_date, invoice, shipping_charge, location, delivery_preference, payment_mode, amount, total_amount, grand_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)',
                 [
                     cust_id,
-                    order_details.product_id,
+                    order_details.prod_id,
                     order_details.order_date,
                     order_details.invoice,
                     order_details.shipping_charge,
