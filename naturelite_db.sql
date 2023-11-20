@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2023 at 06:11 AM
+-- Generation Time: Nov 20, 2023 at 12:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `customer` (
   `cust_id` int(20) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `number` int(10) NOT NULL,
+  `number` varchar(10) NOT NULL,
   `address` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -41,8 +41,26 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`cust_id`, `name`, `number`, `address`, `created_at`, `updated_at`) VALUES
-(1, '[value-2]', 0, '[value-4]', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'ashi', 1236598745, 'tld', NULL, NULL);
+(2, 'ashi', '1236598745', 'tld', NULL, NULL),
+(3, 'ashi', '2147483647', 'tld', NULL, NULL),
+(6, 'ashi', '3216549777', 'tld', NULL, NULL),
+(7, 'aayushi', '55555555', 'bhilai', NULL, NULL),
+(8, 'meena', '888888888', 'bsp', NULL, NULL),
+(9, 'meena', '789789789', 'bsp', NULL, NULL),
+(10, 'annu', '9879876787', 'up', NULL, NULL),
+(11, 'manish', '9767812347', 'up', NULL, NULL),
+(12, 'soniya', '8888888888', 'up', NULL, NULL),
+(13, 'soniya', '6666666666', 'up', NULL, NULL),
+(18, 'soniya', '7689765678', 'up', NULL, NULL),
+(19, 'soniya', '9898876767', 'up', NULL, NULL),
+(20, 'soniya', '5678765679', 'up', NULL, NULL),
+(21, 'soniya', '7887878755', 'up', NULL, NULL),
+(23, 'delivered', '2232323232', 'tld-neora', NULL, NULL),
+(24, 'soni', '7887878787', 'up', NULL, NULL),
+(26, 'soni', '7887118787', 'up', NULL, NULL),
+(27, 'anup', '9300341067', 'nagpur', NULL, NULL),
+(28, 'anup', '9365641067', 'nagpur', NULL, NULL),
+(29, 'ansuman', '9641067222', 'nagpur', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -52,20 +70,47 @@ INSERT INTO `customer` (`cust_id`, `name`, `number`, `address`, `created_at`, `u
 
 CREATE TABLE `order_detail` (
   `order_id` int(11) NOT NULL,
-  `cust_id` int(11) NOT NULL,
+  `cust_id` int(20) NOT NULL,
   `prod_id` int(11) NOT NULL,
-  `order_date` int(11) NOT NULL,
+  `date` date NOT NULL,
   `invoice` int(11) NOT NULL,
   `shipping_charge` int(11) NOT NULL,
   `location` varchar(20) NOT NULL,
   `delivery_preference` varchar(30) DEFAULT NULL,
   `payment_mode` varchar(30) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `amount` int(11) NOT NULL,
   `total_amount` int(11) NOT NULL,
-  `grand_total` int(11) NOT NULL
+  `grand_total` int(11) NOT NULL,
+  `formatted_order_id` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_detail`
+--
+
+INSERT INTO `order_detail` (`order_id`, `cust_id`, `prod_id`, `date`, `invoice`, `shipping_charge`, `location`, `delivery_preference`, `payment_mode`, `created_at`, `updated_at`, `amount`, `total_amount`, `grand_total`, `formatted_order_id`) VALUES
+(1, 1, 1, '2023-11-17', 1, 0, 'bhilai', 'assa', 'upi', '2023-11-11 07:16:46', '2023-11-11 07:16:46', 150, 150, 150, 'FUT_1'),
+(24, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(25, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(27, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(28, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(29, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(30, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, ''),
+(31, 11, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'FUT_31'),
+(33, 12, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'IMM_33'),
+(47, 13, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'IMM_47'),
+(48, 14, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'FUT_48'),
+(49, 15, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'FUT_49'),
+(51, 17, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'IMM_51'),
+(52, 18, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'IMM_52'),
+(54, 20, 1, '0000-00-00', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'FUT_54'),
+(55, 21, 1, '2023-11-06', 1, 0, 'bhilai', 'assa', 'upi', NULL, NULL, 150, 150, 150, 'FUT_54'),
+(56, 22, 1, '2023-11-15', 1, 0, 'bhilai', NULL, 'upi', NULL, NULL, 150, 150, 150, 'IMM_56'),
+(57, 22, 1, '2023-11-15', 1, 0, 'bhilai', NULL, 'upi', NULL, NULL, 150, 150, 150, 'FUT_57'),
+(59, 23, 1, '2023-11-08', 1, 0, 'bhilai', NULL, 'upi', NULL, NULL, 150, 150, 150, 'FUT_59'),
+(61, 24, 1, '0000-00-00', 1, 0, 'bhilai', NULL, 'upi', '2023-11-20 07:56:21', NULL, 150, 150, 150, 'IMM_61');
 
 -- --------------------------------------------------------
 
@@ -77,11 +122,26 @@ CREATE TABLE `order_summary` (
   `order_detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `prod_id` int(11) NOT NULL,
+  `formatted_order_id` varchar(20) NOT NULL,
   `quantity` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_summary`
+--
+
+INSERT INTO `order_summary` (`order_detail_id`, `order_id`, `prod_id`, `formatted_order_id`, `quantity`, `discount`, `created_at`, `updated_at`, `status`) VALUES
+(1, 1, 1, 'FUT_1', 1, 0, '2023-11-11 07:16:46', NULL, '0'),
+(3, 59, 1, 'FUT_DEL_', 1, 0, NULL, NULL, 'delivered'),
+(4, 60, 1, 'IMM_60', 1, 0, NULL, NULL, '0'),
+(5, 56, 1, 'IMM_56', 1, 0, NULL, NULL, '0'),
+(6, 51, 1, 'IMM_51', 1, 0, NULL, NULL, '0'),
+(7, 52, 1, 'IMM_52', 1, 0, NULL, NULL, 'paid'),
+(9, 31, 1, 'FUT_31', 1, 0, '2023-11-17 07:55:56', '2023-11-17 07:55:56', 'unpaid');
 
 -- --------------------------------------------------------
 
@@ -93,8 +153,8 @@ CREATE TABLE `product` (
   `prod_id` int(20) NOT NULL,
   `prod_name` varchar(50) NOT NULL,
   `rate` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -145,7 +205,7 @@ CREATE TABLE `user` (
   `verification_token` varchar(50) NOT NULL,
   `verified` tinyint(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -153,8 +213,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `name`, `number`, `password`, `department`, `role_id`, `email`, `verification_token`, `verified`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2147483647', '126545', 'marketing', 4, 'ashi@gmail.com', '', 0, '2023-11-08 12:18:25', NULL),
-(29, 'tarun', '147753647', '8596311', 'production', 3, 'ashi@gmail.com', '6bbcef7b-2457-4007-b59b-9b19b5547266', 0, '2023-11-09 05:00:37', NULL);
+(1, 'admin', '7224853471', '123456', 'marketing', 4, 'ashi133@gmail.com', '', 1, '2023-11-20 09:48:21', NULL),
+(2, 'dolly', '1234567890', '123456', 'production', 2, 'ashi133@gmail.com', 'c50badb1-2730-44fa-989d-55e4d70d8d0f', 1, '2023-11-11 10:13:26', NULL),
+(3, 'rahul', '1111143434', '123456', 'production', 3, 'ashi133@gmail.com', 'e1278418-077d-41d7-91a9-8bd0d650153d', 1, '2023-11-11 10:14:27', NULL),
+(4, 'anmol', '9870987890', '111111', 'production', 2, 'ashi133@gmail.com', 'dc05f1de-36f6-4aed-aaec-2e089cc1b20d', 1, '2023-11-11 10:14:30', NULL),
+(5, 'ansuman', '7676767676', '11111', 'production', 2, 'ashi133@gmail.com', '5cf07e19-79d9-4de2-8386-4facb755c09d', 1, '2023-11-20 09:48:57', NULL),
+(58, 'aaaaaaa', '1434343444', '11111', 'production', 2, 'ashi133@gmail.com', 'e23e21ed-f923-4277-b327-52aab8521797', 1, '2023-11-20 09:48:31', NULL),
+(69, 'yadu', '7767676767', '11111', 'production', 2, 'ashi133@gmail.com', '5f840b7c-8f94-41b0-b027-7e50c4f6a5c2', 1, '2023-11-14 13:31:11', NULL),
+(83, 'bhumika', '7775676565', '555555', 'production', 2, 'ashi133@gmail.com', '56b7fef9-e808-42e2-a8fa-919db8a69be1', 1, '2023-11-20 05:57:17', NULL);
 
 --
 -- Indexes for dumped tables
@@ -164,7 +230,8 @@ INSERT INTO `user` (`user_id`, `name`, `number`, `password`, `department`, `role
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`cust_id`);
+  ADD PRIMARY KEY (`cust_id`),
+  ADD UNIQUE KEY `number` (`number`);
 
 --
 -- Indexes for table `order_detail`
@@ -199,6 +266,7 @@ ALTER TABLE `role`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `number` (`number`),
   ADD KEY `role_id` (`role_id`);
 
 --
@@ -209,19 +277,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cust_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cust_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `order_summary`
 --
 ALTER TABLE `order_summary`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -239,7 +307,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- Constraints for dumped tables
