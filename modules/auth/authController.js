@@ -57,6 +57,7 @@ const authController = {
             } else if (results.length > 0) {
                 // User exists and credentials match
                 const userId = results[0].user_id;
+                const verified = results[0].verified;
 
                 // Check the user's verification status
                 db.query('SELECT verified FROM user WHERE user_id = ?', [userId], (err, results) => {
@@ -64,7 +65,8 @@ const authController = {
                         console.error('Error checking user verification status: ' + err);
                         res.status(500).send('Error checking user verification status');
                     } else if (results.length > 0 && results[0].verified === 1) {
-                        res.status(200).send('Login successful');
+                        // res.status(200).send('Login successful');
+                        res.status(200).json({ userId }); // Include userId in the response
                     } else {
                         res.status(401).send('Please wait for verification');
                     }

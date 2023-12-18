@@ -6,6 +6,7 @@ const db = require('../../config/db');
 router.get('/checkPermission/:user_id', (req, res) => {
 
     const userId = req.params.user_id;
+    // console.log(userId);
     // Use a SQL JOIN to retrieve the user role from the 'role' table
     const query = `
         SELECT u.*, r.role_name
@@ -15,7 +16,7 @@ router.get('/checkPermission/:user_id', (req, res) => {
 
     db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
+            // console.error('Database error:', err);
             res.status(500).json({ error: 'Database error' });
         } else if (results.length === 0) {
             res.status(404).json({ error: 'User not found' });
